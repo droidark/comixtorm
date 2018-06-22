@@ -1,8 +1,10 @@
 package com.comixtorm.collector.service.impl;
 
 import com.comixtorm.collector.converter.Converter;
+import com.comixtorm.collector.dto.TitleDto;
 import com.comixtorm.collector.dto.UserDto;
 import com.comixtorm.collector.exception.UserAlreadyExistException;
+import com.comixtorm.collector.model.Title;
 import com.comixtorm.collector.model.User;
 import com.comixtorm.collector.repository.UserRepository;
 import com.comixtorm.collector.service.UserService;
@@ -10,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.util.*;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -38,5 +40,14 @@ public class UserServiceImpl implements UserService {
         } else {
             throw new UserAlreadyExistException("User already exist!");
         }
+    }
+
+    @Override
+    public Set<TitleDto> findTitlesByUsername(String username) {
+        Set<TitleDto> titles = new TreeSet<>();
+        for(Title t : userRepository.findByUsername(username).getTitles()){
+            titles.add(Converter.titleToTitleDto(t, true));
+        }
+        return titles;
     }
 }
