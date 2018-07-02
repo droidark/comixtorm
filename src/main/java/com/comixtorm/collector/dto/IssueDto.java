@@ -17,9 +17,13 @@ public class IssueDto implements Comparable<IssueDto> {
     private String currency;
     private Date publishedDate;
     private String shortReview;
+    private String event;
+    private String storyArch;
+    private Integer isbn;
+    private boolean collected;
     private TitleDto title;
     private Set<CoverDto> covers;
-    private Map<String, String> staff;
+    private Set<AuthorDto> authors;
 
     public Long getId() {
         return id;
@@ -93,6 +97,38 @@ public class IssueDto implements Comparable<IssueDto> {
         this.shortReview = shortReview;
     }
 
+    public String getEvent() {
+        return event;
+    }
+
+    public void setEvent(String event) {
+        this.event = event;
+    }
+
+    public String getStoryArch() {
+        return storyArch;
+    }
+
+    public void setStoryArch(String storyArch) {
+        this.storyArch = storyArch;
+    }
+
+    public Integer getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(Integer isbn) {
+        this.isbn = isbn;
+    }
+
+    public boolean isCollected() {
+        return collected;
+    }
+
+    public void setCollected(boolean collected) {
+        this.collected = collected;
+    }
+
     public TitleDto getTitle() {
         return title;
     }
@@ -109,16 +145,14 @@ public class IssueDto implements Comparable<IssueDto> {
         this.covers = covers;
     }
 
-    public Map<String, String> getStaff() {
-        return staff;
+    public Set<AuthorDto> getAuthors() {
+        return authors;
     }
 
-    public void setStaff(Map<String, String> staff) {
-        this.staff = staff;
+    public void setAuthors(Set<AuthorDto> authors) {
+        this.authors = authors;
     }
 
     @Override
-    public int compareTo(IssueDto o) {
-        return (int) (id - o.getId());
-    }
+    public int compareTo(IssueDto o) { return (int) (id - o.getId()); }
 }

@@ -10,7 +10,9 @@ public class AuthorDto implements Comparable<AuthorDto> {
     private String name;
     private String avatar;
     private String biography;
+    private Set<IssueDto> issues;
     private Set<RoleDto> roles;
+    private Set<AuthorSocialNetworkDto> authorSocialNetworks;
 
     public Long getId() {
         return id;
@@ -44,12 +46,28 @@ public class AuthorDto implements Comparable<AuthorDto> {
         this.biography = biography;
     }
 
+    public Set<IssueDto> getIssues() {
+        return issues;
+    }
+
+    public void setIssues(Set<IssueDto> issues) {
+        this.issues = issues;
+    }
+
     public Set<RoleDto> getRoles() {
         return roles;
     }
 
     public void setRoles(Set<RoleDto> roles) {
         this.roles = roles;
+    }
+
+    public Set<AuthorSocialNetworkDto> getAuthorSocialNetworks() {
+        return authorSocialNetworks;
+    }
+
+    public void setAuthorSocialNetworks(Set<AuthorSocialNetworkDto> authorSocialNetworks) {
+        this.authorSocialNetworks = authorSocialNetworks;
     }
 
     @Override

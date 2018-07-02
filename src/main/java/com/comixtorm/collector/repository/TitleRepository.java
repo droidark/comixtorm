@@ -1,5 +1,6 @@
 package com.comixtorm.collector.repository;
 
+import com.comixtorm.collector.model.Issue;
 import com.comixtorm.collector.model.Title;
 import com.comixtorm.collector.model.User;
 import org.springframework.data.repository.CrudRepository;

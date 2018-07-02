@@ -8,7 +8,6 @@ import java.util.Set;
 public class RoleDto implements Comparable<RoleDto> {
     private Long id;
     private String description;
-    private Set<IssueDto> issues;
     private Set<AuthorDto> authors;
 
     public Long getId() {
@@ -25,14 +24,6 @@ public class RoleDto implements Comparable<RoleDto> {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Set<IssueDto> getIssues() {
-        return issues;
-    }
-
-    public void setIssues(Set<IssueDto> issues) {
-        this.issues = issues;
     }
 
     public Set<AuthorDto> getAuthors() {

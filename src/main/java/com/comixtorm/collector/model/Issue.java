@@ -20,10 +20,13 @@ public class Issue {
     private String currency;
     private Date publishedDate;
     private String shortReview;
+    private String event;
+    private String storyArch;
+    private Integer isbn;
     private Title title;
     private Set<Cover> covers = new TreeSet<>();
     private Set<Cover> userCovers = new TreeSet<>();
-    private Set<Role> roles = new TreeSet<>();
+    private Set<Author> authors = new TreeSet<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -108,6 +111,33 @@ public class Issue {
         this.shortReview = shortReview;
     }
 
+    @Column(name = "issue_event")
+    public String getEvent() {
+        return event;
+    }
+
+    public void setEvent(String event) {
+        this.event = event;
+    }
+
+    @Column(name = "issue_story_arch")
+    public String getStoryArch() {
+        return storyArch;
+    }
+
+    public void setStoryArch(String storyArch) {
+        this.storyArch = storyArch;
+    }
+
+    @Column(name = "issue_isbn")
+    public Integer getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(Integer isbn) {
+        this.isbn = isbn;
+    }
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "title_id", nullable = false)
@@ -146,16 +176,16 @@ public class Issue {
     @JsonManagedReference
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(
-            name = "cxt_issue_x_role_author",
+            name = "cxt_issue_x_author_role",
             joinColumns = @JoinColumn(name = "issue_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
+            inverseJoinColumns = @JoinColumn(name = "author_id")
     )
     @OrderBy("id")
-    public Set<Role> getRoles() {
-        return roles;
+    public Set<Author> getAuthors() {
+        return authors;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setAuthors(Set<Author> authors) {
+        this.authors = authors;
     }
 }

@@ -13,6 +13,7 @@ public class PublisherDto implements Comparable<PublisherDto> {
     private String logo;
     private String information;
     private Set<TitleDto> titles;
+    private Set<PublisherSocialNetworkDto> publisherSocialNetworks;
 
     public Long getId() {
         return id;
@@ -68,6 +69,14 @@ public class PublisherDto implements Comparable<PublisherDto> {
 
     public void setTitles(Set<TitleDto> titles) {
         this.titles = titles;
+    }
+
+    public Set<PublisherSocialNetworkDto> getPublisherSocialNetworks() {
+        return publisherSocialNetworks;
+    }
+
+    public void setPublisherSocialNetworks(Set<PublisherSocialNetworkDto> publisherSocialNetworks) {
+        this.publisherSocialNetworks = publisherSocialNetworks;
     }
 
     @Override

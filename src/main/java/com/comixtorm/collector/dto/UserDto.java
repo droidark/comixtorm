@@ -15,9 +15,11 @@ public class UserDto implements Comparable<UserDto> {
     private String cover;
     private String aboutYou;
     private Date signUpDate;
+    private String ipAddress;
     private String status;
     private Set<ProfileDto> profiles;
     private Set<TitleDto> titles;
+    private Set<UserSocialNetworkDto> userSocialNetworks;
 
     public Long getId() {
         return id;
@@ -83,6 +85,14 @@ public class UserDto implements Comparable<UserDto> {
         this.signUpDate = signUpDate;
     }
 
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -105,6 +115,14 @@ public class UserDto implements Comparable<UserDto> {
 
     public void setTitles(Set<TitleDto> titles) {
         this.titles = titles;
+    }
+
+    public Set<UserSocialNetworkDto> getUserSocialNetworks() {
+        return userSocialNetworks;
+    }
+
+    public void setUserSocialNetworks(Set<UserSocialNetworkDto> userSocialNetworks) {
+        this.userSocialNetworks = userSocialNetworks;
     }
 
     @Override

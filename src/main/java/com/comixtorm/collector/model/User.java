@@ -147,11 +147,6 @@ public class User implements Comparable<User> {
         this.titles = titles;
     }
 
-    @Override
-    public int compareTo(User o) {
-        return (int) (id - o.getId());
-    }
-
     @OneToMany(mappedBy = "user")
     public Set<UserSocialNetwork> getUserSocialNetworks() {
         return userSocialNetworks;
@@ -159,5 +154,10 @@ public class User implements Comparable<User> {
 
     public void setUserSocialNetworks(Set<UserSocialNetwork> userSocialNetworks) {
         this.userSocialNetworks = userSocialNetworks;
+    }
+
+    @Override
+    public int compareTo(User o) {
+        return (int) (id - o.getId());
     }
 }

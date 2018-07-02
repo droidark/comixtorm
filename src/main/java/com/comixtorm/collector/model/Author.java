@@ -1,6 +1,7 @@
 package com.comixtorm.collector.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -13,6 +14,7 @@ public class Author {
     private String name;
     private String avatar;
     private String biography;
+    private Set<Issue> issues = new TreeSet<>();
     private Set<Role> roles = new TreeSet<>();
     private Set<AuthorSocialNetwork> authorSocialNetworks = new TreeSet<>();
 
@@ -56,6 +58,21 @@ public class Author {
 
     @JsonBackReference
     @ManyToMany(mappedBy = "authors")
+    public Set<Issue> getIssues() {
+        return issues;
+    }
+
+    public void setIssues(Set<Issue> issues) {
+        this.issues = issues;
+    }
+
+    @JsonManagedReference
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "cxt_issue_x_author_role",
+            joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
     public Set<Role> getRoles() {
         return roles;
     }

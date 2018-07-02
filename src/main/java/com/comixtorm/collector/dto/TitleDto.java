@@ -14,6 +14,7 @@ public class TitleDto implements Comparable<TitleDto> {
     private Integer totalIssues;
     private Date launchDate;
     private PublisherDto publisher;
+    private Set<UserDto> users;
     private Set<IssueDto> issues;
 
     public Long getId() {
@@ -70,6 +71,14 @@ public class TitleDto implements Comparable<TitleDto> {
 
     public void setPublisher(PublisherDto publisher) {
         this.publisher = publisher;
+    }
+
+    public Set<UserDto> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<UserDto> users) {
+        this.users = users;
     }
 
     public Set<IssueDto> getIssues() {

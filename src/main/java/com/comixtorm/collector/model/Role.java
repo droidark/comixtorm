@@ -12,7 +12,6 @@ import java.util.TreeSet;
 public class Role {
     private Long id;
     private String description;
-    private Set<Issue> issues = new TreeSet<>();
     private Set<Author> authors = new TreeSet<>();
 
     @Id
@@ -37,21 +36,6 @@ public class Role {
 
     @JsonBackReference
     @ManyToMany(mappedBy = "roles")
-    public Set<Issue> getIssues() {
-        return issues;
-    }
-
-    public void setIssues(Set<Issue> issues) {
-        this.issues = issues;
-    }
-
-    @JsonManagedReference
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinTable(
-            name = "cxt_issue_x_role_author",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "author_id")
-    )
     public Set<Author> getAuthors() {
         return authors;
     }
