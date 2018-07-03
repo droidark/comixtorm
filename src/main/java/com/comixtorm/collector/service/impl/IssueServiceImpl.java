@@ -13,9 +13,7 @@ import com.comixtorm.collector.service.IssueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 @Service("issueService")
 public class IssueServiceImpl implements IssueService {
@@ -39,11 +37,13 @@ public class IssueServiceImpl implements IssueService {
             //Getting titles titles
             searchIssues.forEach(issueDto -> queryTitles.add(converterService.convertToTitle(issueDto.getTitle(),false, false, false, false)));
             //Getting issues per user and titles and fill userIssues
-            userRepository.findByUsernameAndTitlesIn(username, queryTitles).getTitles().forEach(
+            if(userRepository.findByUsernameAndTitlesIn(username, queryTitles) != null) {
+                userRepository.findByUsernameAndTitlesIn(username, queryTitles).getTitles().forEach(
                     title -> title.getUserIssues().forEach(
                             issue -> userIssues.add(converterService.convertToIssueDto(issue, true, true, false, true, true))
                     )
-            );
+                );
+            }
             searchIssues.forEach(issueDto -> userIssues.add(issueDto));
             return userIssues;
             //return converterService.convertToSetIssueDto(searchIssues, true, true, false, true);
