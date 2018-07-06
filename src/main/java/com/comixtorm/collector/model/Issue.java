@@ -10,7 +10,7 @@ import java.util.TreeSet;
 
 @Entity
 @Table(name = "cxt_issue")
-public class Issue {
+public class Issue implements Comparable<Issue> {
     private Long id;
     private String name;
     private String vanity;
@@ -187,5 +187,10 @@ public class Issue {
 
     public void setAuthors(Set<Author> authors) {
         this.authors = authors;
+    }
+
+    @Override
+    public int compareTo(Issue o) {
+        return (int) (id - o.getId());
     }
 }

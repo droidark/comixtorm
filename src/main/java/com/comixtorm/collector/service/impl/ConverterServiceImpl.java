@@ -194,7 +194,7 @@ public class ConverterServiceImpl implements ConverterService {
         title.setAvatar(titleDto.getAvatar());
         title.setTotalIssues(titleDto.getTotalIssues());
         title.setLaunchDate(titleDto.getLaunchDate());
-        title.setPublisher(convertToPublisher(titleDto.getPublisher(), false, false, false));
+        title.setPublisher(titleDto.getPublisher() != null ? convertToPublisher(titleDto.getPublisher(), false, false, false) : null);
         if (issue){
             if (userIssue) {
                 title.setUserIssues(convertToSetIssue(titleDto.getIssues(), false, true, true, false));

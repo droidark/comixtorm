@@ -111,7 +111,7 @@ public class Title implements Comparable<Title> {
     }
 
     @JsonManagedReference
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "cxt_user_x_title_issue_cover",
             joinColumns = @JoinColumn(name = "title_id"),

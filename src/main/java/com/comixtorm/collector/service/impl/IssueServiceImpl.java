@@ -36,9 +36,10 @@ public class IssueServiceImpl implements IssueService {
             Set<Title> queryTitles = new TreeSet<>();
             //Getting titles titles
             searchIssues.forEach(issueDto -> queryTitles.add(converterService.convertToTitle(issueDto.getTitle(),false, false, false, false)));
+            User dataUser = userRepository.findByUsernameAndTitlesIn(username, queryTitles);
             //Getting issues per user and titles and fill userIssues
-            if(userRepository.findByUsernameAndTitlesIn(username, queryTitles) != null) {
-                userRepository.findByUsernameAndTitlesIn(username, queryTitles).getTitles().forEach(
+            if(dataUser != null) {
+                dataUser.getTitles().forEach(
                     title -> title.getUserIssues().forEach(
                             issue -> userIssues.add(converterService.convertToIssueDto(issue, true, true, false, true, true))
                     )

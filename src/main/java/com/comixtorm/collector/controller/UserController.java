@@ -2,6 +2,7 @@ package com.comixtorm.collector.controller;
 
 import com.comixtorm.collector.dto.TitleDto;
 import com.comixtorm.collector.dto.UserDto;
+import com.comixtorm.collector.model.Title;
 import com.comixtorm.collector.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,5 +29,12 @@ public class UserController {
     public Set<TitleDto> userTitles() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return userService.findTitlesByUsername(authentication.getName());
+    }
+
+    @PostMapping("/add")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
+    public void saveCollection(@RequestBody TitleDto titleDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        userService.saveCollection(titleDto, authentication.getName());
     }
 }

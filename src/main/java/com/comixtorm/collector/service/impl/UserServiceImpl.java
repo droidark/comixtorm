@@ -3,6 +3,9 @@ package com.comixtorm.collector.service.impl;
 import com.comixtorm.collector.dto.TitleDto;
 import com.comixtorm.collector.dto.UserDto;
 import com.comixtorm.collector.exception.UserAlreadyExistException;
+import com.comixtorm.collector.model.Cover;
+import com.comixtorm.collector.model.Issue;
+import com.comixtorm.collector.model.Title;
 import com.comixtorm.collector.model.User;
 import com.comixtorm.collector.repository.UserRepository;
 import com.comixtorm.collector.service.ConverterService;
@@ -46,5 +49,27 @@ public class UserServiceImpl implements UserService {
     @Override
     public Set<TitleDto> findTitlesByUsername(String username) {
         return converterService.convertToSetTitleDto(userRepository.findByUsername(username).getTitles(), false, true, false, false, true);
+    }
+
+    @Override
+    public void saveCollection(TitleDto titleDto, String username) {
+        Title title = new Title();
+        Issue issue = new Issue();
+        Cover cover = new Cover();
+        Set<Issue> issues = new TreeSet<>();
+        Set<Cover> covers = new TreeSet<>();
+
+        cover.setId(3L);
+        covers.add(cover);
+
+        issue.setId(74L);
+        issue.setUserCovers(covers);
+        issues.add(issue);
+
+        title.setId(13L);
+        title.setUserIssues(issues);
+        User u = userRepository.findByUsername(username);
+        u.getTitles().add(title);
+        userRepository.save(u);
     }
 }

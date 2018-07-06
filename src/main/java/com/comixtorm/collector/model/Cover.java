@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "cxt_cover")
-public class Cover {
+public class Cover implements Comparable<Cover> {
     private Long id;
     private String coverImageUrl;
     private Issue issue;
@@ -32,7 +32,7 @@ public class Cover {
     }
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "issue_id", nullable = false)
     public Issue getIssue() {
         return issue;
@@ -40,5 +40,10 @@ public class Cover {
 
     public void setIssue(Issue issue) {
         this.issue = issue;
+    }
+
+    @Override
+    public int compareTo(Cover o) {
+        return (int) (id - o.getId());
     }
 }
