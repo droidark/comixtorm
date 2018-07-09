@@ -22,8 +22,9 @@ public class User implements Comparable<User> {
     private String ipAddress;
     private String status;
     private Set<Profile> profiles = new TreeSet<>();
-    private Set<Title> titles = new TreeSet<>();
+//    private Set<Title> titles = new TreeSet<>();
     private Set<UserSocialNetwork> userSocialNetworks = new TreeSet<>();
+    private Set<UserPublisherTitleIssueCover> userPublisherTitleIssueCovers;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -132,20 +133,20 @@ public class User implements Comparable<User> {
         this.profiles = profiles;
     }
 
-    @JsonManagedReference
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "cxt_user_x_title_issue_cover",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "title_id")
-    )
-    public Set<Title> getTitles() {
-        return titles;
-    }
-
-    public void setTitles(Set<Title> titles) {
-        this.titles = titles;
-    }
+//    @JsonManagedReference
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(
+//            name = "cxt_user_x_title_issue_cover",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "title_id")
+//    )
+//    public Set<Title> getTitles() {
+//        return titles;
+//    }
+//
+//    public void setTitles(Set<Title> titles) {
+//        this.titles = titles;
+//    }
 
     @OneToMany(mappedBy = "user")
     public Set<UserSocialNetwork> getUserSocialNetworks() {
@@ -154,6 +155,15 @@ public class User implements Comparable<User> {
 
     public void setUserSocialNetworks(Set<UserSocialNetwork> userSocialNetworks) {
         this.userSocialNetworks = userSocialNetworks;
+    }
+
+    @OneToMany(mappedBy = "userPublisherTitleIssueCoverPK.user", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    public Set<UserPublisherTitleIssueCover> getUserPublisherTitleIssueCovers() {
+        return userPublisherTitleIssueCovers;
+    }
+
+    public void setUserPublisherTitleIssueCovers(Set<UserPublisherTitleIssueCover> userPublisherTitleIssueCovers) {
+        this.userPublisherTitleIssueCovers = userPublisherTitleIssueCovers;
     }
 
     @Override

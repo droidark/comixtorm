@@ -20,8 +20,9 @@ public class Title implements Comparable<Title> {
     private Date launchDate;
     private Publisher publisher;
     private Set<Issue> issues = new TreeSet<>();
-    private Set<User> users = new TreeSet<>();
-    private Set<Issue> userIssues = new TreeSet<>();
+//    private Set<User> users = new TreeSet<>();
+//    private Set<Issue> userIssues = new TreeSet<>();
+    private Set<UserPublisherTitleIssueCover> userPublisherTitleIssueCovers;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -100,30 +101,39 @@ public class Title implements Comparable<Title> {
         this.issues = issues;
     }
 
-    @JsonBackReference
-    @ManyToMany(mappedBy = "titles")
-    public Set<User> getUsers() {
-        return users;
+//    @JsonBackReference
+//    @ManyToMany(mappedBy = "titles")
+//    public Set<User> getUsers() {
+//        return users;
+//    }
+//
+//    public void setUsers(Set<User> users) {
+//        this.users = users;
+//    }
+
+//    @JsonManagedReference
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(
+//            name = "cxt_user_x_title_issue_cover",
+//            joinColumns = @JoinColumn(name = "title_id"),
+//            inverseJoinColumns = @JoinColumn(name = "issue_id")
+//    )
+//    @OrderBy("id")
+//    public Set<Issue> getUserIssues() {
+//        return userIssues;
+//    }
+//
+//    public void setUserIssues(Set<Issue> userIssues) {
+//        this.userIssues = userIssues;
+//    }
+
+    @OneToMany(mappedBy = "userPublisherTitleIssueCoverPK.title", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    public Set<UserPublisherTitleIssueCover> getUserPublisherTitleIssueCovers() {
+        return userPublisherTitleIssueCovers;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
-    @JsonManagedReference
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "cxt_user_x_title_issue_cover",
-            joinColumns = @JoinColumn(name = "title_id"),
-            inverseJoinColumns = @JoinColumn(name = "issue_id")
-    )
-    @OrderBy("id")
-    public Set<Issue> getUserIssues() {
-        return userIssues;
-    }
-
-    public void setUserIssues(Set<Issue> userIssues) {
-        this.userIssues = userIssues;
+    public void setUserPublisherTitleIssueCovers(Set<UserPublisherTitleIssueCover> userPublisherTitleIssueCovers) {
+        this.userPublisherTitleIssueCovers = userPublisherTitleIssueCovers;
     }
 
     @Override

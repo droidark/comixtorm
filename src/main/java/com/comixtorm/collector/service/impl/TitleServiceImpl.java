@@ -27,12 +27,14 @@ public class TitleServiceImpl implements TitleService {
 
     @Override
     public TitleDto findByVanityOrderByIdAsc(String vanity) {
-        return converterService.convertToTitleDto(titleRepository.findByVanityOrderByIdAsc(vanity),true, false, false, false, false);
+//        return converterService.convertToTitleDto(titleRepository.findByVanityOrderByIdAsc(vanity),true, false, false, false, false);
+        return null;
     }
 
     @Override
     public TitleDto findByVanityAndUsersIn(String vanity, String username) {
-        Set<User> users = Stream.of(userRepository.findByUsername(username)).collect(Collectors.toSet());
-        return converterService.convertToTitleDto(titleRepository.findByVanityAndUsersIn(vanity, users),false, true, false, false, false);
+//        Set<User> users = Stream.of(userRepository.findByUsername(username)).collect(Collectors.toSet());
+//        return converterService.convertToTitleDto(titleRepository.findByVanityAndUsersIn(vanity, users),false, true, false, false, false);
+        return null;
     }
 }

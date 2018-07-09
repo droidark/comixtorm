@@ -25,8 +25,9 @@ public class Issue implements Comparable<Issue> {
     private Integer isbn;
     private Title title;
     private Set<Cover> covers = new TreeSet<>();
-    private Set<Cover> userCovers = new TreeSet<>();
+//    private Set<Cover> userCovers = new TreeSet<>();
     private Set<Author> authors = new TreeSet<>();
+    private Set<UserPublisherTitleIssueCover> userPublisherTitleIssueCovers;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -158,20 +159,20 @@ public class Issue implements Comparable<Issue> {
         this.covers = covers;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "cxt_user_x_title_issue_cover",
-            joinColumns = @JoinColumn(name = "issue_id"),
-            inverseJoinColumns = @JoinColumn(name = "cover_id")
-    )
-    @OrderBy("id")
-    public Set<Cover> getUserCovers() {
-        return userCovers;
-    }
-
-    public void setUserCovers(Set<Cover> userCovers) {
-        this.userCovers = userCovers;
-    }
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinTable(
+//            name = "cxt_user_x_title_issue_cover",
+//            joinColumns = @JoinColumn(name = "issue_id"),
+//            inverseJoinColumns = @JoinColumn(name = "cover_id")
+//    )
+//    @OrderBy("id")
+//    public Set<Cover> getUserCovers() {
+//        return userCovers;
+//    }
+//
+//    public void setUserCovers(Set<Cover> userCovers) {
+//        this.userCovers = userCovers;
+//    }
 
     @JsonManagedReference
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
@@ -187,6 +188,15 @@ public class Issue implements Comparable<Issue> {
 
     public void setAuthors(Set<Author> authors) {
         this.authors = authors;
+    }
+
+    @OneToMany(mappedBy = "userPublisherTitleIssueCoverPK.issue", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    public Set<UserPublisherTitleIssueCover> getUserPublisherTitleIssueCovers() {
+        return userPublisherTitleIssueCovers;
+    }
+
+    public void setUserPublisherTitleIssueCovers(Set<UserPublisherTitleIssueCover> userPublisherTitleIssueCovers) {
+        this.userPublisherTitleIssueCovers = userPublisherTitleIssueCovers;
     }
 
     @Override

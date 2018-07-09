@@ -8,5 +8,5 @@ import java.util.Set;
 
 public interface UserRepository extends CrudRepository<User, Long> {
     User findByUsername(String username);
-    User findByUsernameAndTitlesIn(String username, Set<Title> titles);
+//    User findByUsernameAndTitlesIn(String username, Set<Title> titles);
 }

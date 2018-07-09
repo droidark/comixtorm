@@ -3,6 +3,7 @@ package com.comixtorm.collector.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "cxt_cover")
@@ -10,6 +11,7 @@ public class Cover implements Comparable<Cover> {
     private Long id;
     private String coverImageUrl;
     private Issue issue;
+    private Set<UserPublisherTitleIssueCover> userPublisherTitleIssueCovers;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -40,6 +42,15 @@ public class Cover implements Comparable<Cover> {
 
     public void setIssue(Issue issue) {
         this.issue = issue;
+    }
+
+    @OneToMany(mappedBy = "userPublisherTitleIssueCoverPK.cover", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    public Set<UserPublisherTitleIssueCover> getUserPublisherTitleIssueCovers() {
+        return userPublisherTitleIssueCovers;
+    }
+
+    public void setUserPublisherTitleIssueCovers(Set<UserPublisherTitleIssueCover> userPublisherTitleIssueCovers) {
+        this.userPublisherTitleIssueCovers = userPublisherTitleIssueCovers;
     }
 
     @Override

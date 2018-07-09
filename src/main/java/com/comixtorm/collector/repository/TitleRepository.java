@@ -10,5 +10,5 @@ import java.util.Set;
 public interface TitleRepository extends CrudRepository<Title, Long> {
     Title findByVanity(String vanity);
     Title findByVanityOrderByIdAsc(String vanity);
-    Title findByVanityAndUsersIn(String vanity, Set<User> users);
+//    Title findByVanityAndUsersIn(String vanity, Set<User> users);
 }

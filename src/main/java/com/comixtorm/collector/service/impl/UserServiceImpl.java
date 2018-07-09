@@ -29,47 +29,48 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public UserDto findByUsername(String username) {
-        return converterService.convertToUserDto(userRepository.findByUsername(username),false, false, false, false);
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
     @Override
     public void save(UserDto userDto) throws UserAlreadyExistException {
-        User user = userRepository.findByUsername(userDto.getUsername());
-        if (user == null) {
-            userDto.setSignUpDate(new Date());
-            userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-            userDto.setStatus("PENDING");
-            userRepository.save(converterService.convertToUser(userDto, true, false, false, false));
-        } else {
-            throw new UserAlreadyExistException("User already exist!");
-        }
+//        User user = userRepository.findByUsername(userDto.getUsername());
+//        if (user == null) {
+//            userDto.setSignUpDate(new Date());
+//            userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+//            userDto.setStatus("PENDING");
+//            userRepository.save(converterService.convertToUser(userDto, true, false, false, false));
+//        } else {
+//            throw new UserAlreadyExistException("User already exist!");
+//        }
     }
 
     @Override
     public Set<TitleDto> findTitlesByUsername(String username) {
-        return converterService.convertToSetTitleDto(userRepository.findByUsername(username).getTitles(), false, true, false, false, true);
+//        return converterService.convertToSetTitleDto(userRepository.findByUsername(username).getTitles(), false, true, false, false, true);
+        return null;
     }
 
     @Override
     public void saveCollection(TitleDto titleDto, String username) {
-        Title title = new Title();
-        Issue issue = new Issue();
-        Cover cover = new Cover();
-        Set<Issue> issues = new TreeSet<>();
-        Set<Cover> covers = new TreeSet<>();
-
-        cover.setId(3L);
-        covers.add(cover);
-
-        issue.setId(74L);
-        issue.setUserCovers(covers);
-        issues.add(issue);
-
-        title.setId(13L);
-        title.setUserIssues(issues);
-        User u = userRepository.findByUsername(username);
-        u.getTitles().add(title);
-        userRepository.save(u);
+//        Title title = new Title();
+//        Issue issue = new Issue();
+//        Cover cover = new Cover();
+//        Set<Issue> issues = new TreeSet<>();
+//        Set<Cover> covers = new TreeSet<>();
+//
+//        cover.setId(3L);
+//        covers.add(cover);
+//
+//        issue.setId(74L);
+//        issue.setUserCovers(covers);
+//        issues.add(issue);
+//
+//        title.setId(13L);
+//        title.setUserIssues(issues);
+//        User u = userRepository.findByUsername(username);
+//        u.getTitles().add(title);
+//        userRepository.save(u);
     }
 }

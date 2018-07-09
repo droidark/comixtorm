@@ -17,6 +17,7 @@ public class Publisher {
     private String information;
     private Set<Title> titles = new TreeSet<>();
     private Set<PublisherSocialNetwork> publisherSocialNetworks = new TreeSet<>();
+    private Set<UserPublisherTitleIssueCover> userPublisherTitleIssueCovers;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -92,5 +93,14 @@ public class Publisher {
 
     public void setPublisherSocialNetworks(Set<PublisherSocialNetwork> publisherSocialNetworks) {
         this.publisherSocialNetworks = publisherSocialNetworks;
+    }
+
+    @OneToMany(mappedBy = "userPublisherTitleIssueCoverPK.publisher", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    public Set<UserPublisherTitleIssueCover> getUserPublisherTitleIssueCovers() {
+        return userPublisherTitleIssueCovers;
+    }
+
+    public void setUserPublisherTitleIssueCovers(Set<UserPublisherTitleIssueCover> userPublisherTitleIssueCovers) {
+        this.userPublisherTitleIssueCovers = userPublisherTitleIssueCovers;
     }
 }
