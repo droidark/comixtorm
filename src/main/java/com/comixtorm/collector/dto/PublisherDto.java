@@ -2,6 +2,8 @@ package com.comixtorm.collector.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -12,8 +14,8 @@ public class PublisherDto implements Comparable<PublisherDto> {
     private String url;
     private String logo;
     private String information;
-    private Set<TitleDto> titles;
-    private Set<PublisherSocialNetworkDto> publisherSocialNetworks;
+    private List<TitleDto> titles;
+    private List<PublisherSocialNetworkDto> publisherSocialNetworks;
 
     public Long getId() {
         return id;
@@ -63,20 +65,34 @@ public class PublisherDto implements Comparable<PublisherDto> {
         this.information = information;
     }
 
-    public Set<TitleDto> getTitles() {
+    public List<TitleDto> getTitles() {
         return titles;
     }
 
-    public void setTitles(Set<TitleDto> titles) {
+    public void setTitles(List<TitleDto> titles) {
         this.titles = titles;
     }
 
-    public Set<PublisherSocialNetworkDto> getPublisherSocialNetworks() {
+    public List<PublisherSocialNetworkDto> getPublisherSocialNetworks() {
         return publisherSocialNetworks;
     }
 
-    public void setPublisherSocialNetworks(Set<PublisherSocialNetworkDto> publisherSocialNetworks) {
+    public void setPublisherSocialNetworks(List<PublisherSocialNetworkDto> publisherSocialNetworks) {
         this.publisherSocialNetworks = publisherSocialNetworks;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PublisherDto)) return false;
+        PublisherDto that = (PublisherDto) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id);
     }
 
     @Override

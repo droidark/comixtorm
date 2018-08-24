@@ -4,6 +4,7 @@ import com.comixtorm.collector.dto.TitleDto;
 import com.comixtorm.collector.dto.UserDto;
 import com.comixtorm.collector.model.*;
 import com.comixtorm.collector.repository.UserPublisherTitleIssueCoverRepository;
+import com.comixtorm.collector.service.ConverterService;
 import com.comixtorm.collector.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,6 +24,9 @@ public class UserController {
 
     @Autowired
     private UserPublisherTitleIssueCoverRepository userPublisherTitleIssueCoverRepository;
+
+    @Autowired
+    private ConverterService converterService;
 
     @PostMapping("/sign-up")
     public void signUp(@RequestBody UserDto userDto) throws Exception {
@@ -44,29 +48,31 @@ public class UserController {
     }
 
     @GetMapping("/something")
-    public void something() {
+    public UserDto something() {
         User u = userService.findByUsername("fozz");
-        for(UserPublisherTitleIssueCover p : u.getUserPublisherTitleIssueCovers()){
-            System.out.println(p.getUserPublisherTitleIssueCoverPK().getIssue().getName());
-        }
-        u = new User();
-        u.setId(1L);
-        Publisher p = new Publisher();
-        p.setId(4L);
-        Title t = new Title();
-        t.setId(1L);
-        Issue i = new Issue();
-        i.setId(3L);
-        Cover c = new Cover();
-        c.setId(3L);
-        UserPublisherTitleIssueCoverPK uk = new UserPublisherTitleIssueCoverPK();
-        UserPublisherTitleIssueCover up = new UserPublisherTitleIssueCover();
-        uk.setUser(u);
-        uk.setPublisher(p);
-        uk.setTitle(t);
-        uk.setIssue(i);
-        uk.setCover(c);
-        up.setUserPublisherTitleIssueCoverPK(uk);
-        userPublisherTitleIssueCoverRepository.save(up);
+        return converterService.toUserDto(u);
+
+//        for(UserPublisherTitleIssueCover p : u.getUserPublisherTitleIssueCovers()){
+//            System.out.println(p.getUserPublisherTitleIssueCoverPK().getIssue().getName());
+//        }
+//        u = new User();
+//        u.setId(1L);
+//        Publisher p = new Publisher();
+//        p.setId(4L);
+//        Title t = new Title();
+//        t.setId(1L);
+//        Issue i = new Issue();
+//        i.setId(3L);
+//        Cover c = new Cover();
+//        c.setId(3L);
+//        UserPublisherTitleIssueCoverPK uk = new UserPublisherTitleIssueCoverPK();
+//        UserPublisherTitleIssueCover up = new UserPublisherTitleIssueCover();
+//        uk.setUser(u);
+//        uk.setPublisher(p);
+//        uk.setTitle(t);
+//        uk.setIssue(i);
+//        uk.setCover(c);
+//        up.setUserPublisherTitleIssueCoverPK(uk);
+//        userPublisherTitleIssueCoverRepository.save(up);
     }
 }

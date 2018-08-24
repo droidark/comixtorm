@@ -2,12 +2,10 @@ package com.comixtorm.collector.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.util.Date;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class IssueDto implements Comparable<IssueDto> {
+public class IssueDto implements Comparator<IssueDto> {
     private Long id;
     private String name;
     private String vanity;
@@ -22,7 +20,7 @@ public class IssueDto implements Comparable<IssueDto> {
     private Integer isbn;
     private boolean collected;
     private TitleDto title;
-    private Set<CoverDto> covers;
+    private List<CoverDto> covers;
     private Set<AuthorDto> authors;
 
     public Long getId() {
@@ -137,11 +135,11 @@ public class IssueDto implements Comparable<IssueDto> {
         this.title = title;
     }
 
-    public Set<CoverDto> getCovers() {
+    public List<CoverDto> getCovers() {
         return covers;
     }
 
-    public void setCovers(Set<CoverDto> covers) {
+    public void setCovers(List<CoverDto> covers) {
         this.covers = covers;
     }
 
@@ -154,5 +152,21 @@ public class IssueDto implements Comparable<IssueDto> {
     }
 
     @Override
-    public int compareTo(IssueDto o) { return (int) (id - o.getId()); }
+    public int compare(IssueDto o1, IssueDto o2) {
+        return  o1.getId() < o2.getId() ? -1 : o1.getId() == o2.getId() ? 0 : 1;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof IssueDto)) return false;
+        IssueDto issueDto = (IssueDto) o;
+        return Objects.equals(id, issueDto.id);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id);
+    }
 }

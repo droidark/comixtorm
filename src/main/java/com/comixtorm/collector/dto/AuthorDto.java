@@ -2,17 +2,20 @@ package com.comixtorm.collector.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AuthorDto implements Comparable<AuthorDto> {
+public class AuthorDto implements Comparator<AuthorDto> {
     private Long id;
     private String name;
     private String avatar;
     private String biography;
-    private Set<IssueDto> issues;
-    private Set<RoleDto> roles;
-    private Set<AuthorSocialNetworkDto> authorSocialNetworks;
+    private List<IssueDto> issues;
+    private List<RoleDto> roles;
+    private List<AuthorSocialNetworkDto> authorSocialNetworks;
 
     public Long getId() {
         return id;
@@ -46,32 +49,45 @@ public class AuthorDto implements Comparable<AuthorDto> {
         this.biography = biography;
     }
 
-    public Set<IssueDto> getIssues() {
+    public List<IssueDto> getIssues() {
         return issues;
     }
 
-    public void setIssues(Set<IssueDto> issues) {
-        this.issues = issues;
-    }
-
-    public Set<RoleDto> getRoles() {
+    public List<RoleDto> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<RoleDto> roles) {
+    public void setRoles(List<RoleDto> roles) {
         this.roles = roles;
     }
 
-    public Set<AuthorSocialNetworkDto> getAuthorSocialNetworks() {
+    public List<AuthorSocialNetworkDto> getAuthorSocialNetworks() {
         return authorSocialNetworks;
     }
 
-    public void setAuthorSocialNetworks(Set<AuthorSocialNetworkDto> authorSocialNetworks) {
+    public void setAuthorSocialNetworks(List<AuthorSocialNetworkDto> authorSocialNetworks) {
         this.authorSocialNetworks = authorSocialNetworks;
     }
 
+    public void setIssues(List<IssueDto> issues) {
+        this.issues = issues;
+    }
+
     @Override
-    public int compareTo(AuthorDto o) {
-        return (int) (id - o.getId());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AuthorDto)) return false;
+        AuthorDto authorDto = (AuthorDto) o;
+        return Objects.equals(id, authorDto.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public int compare(AuthorDto o1, AuthorDto o2) {
+        return  o1.getId() < o2.getId() ? -1 : o1.getId() == o2.getId() ? 0 : 1;
     }
 }

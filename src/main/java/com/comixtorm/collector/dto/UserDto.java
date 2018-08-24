@@ -3,6 +3,7 @@ package com.comixtorm.collector.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -17,8 +18,8 @@ public class UserDto implements Comparable<UserDto> {
     private Date signUpDate;
     private String ipAddress;
     private String status;
+    private List<PublisherDto> publishers;
     private Set<ProfileDto> profiles;
-    private Set<TitleDto> titles;
     private Set<UserSocialNetworkDto> userSocialNetworks;
 
     public Long getId() {
@@ -101,20 +102,20 @@ public class UserDto implements Comparable<UserDto> {
         this.status = status;
     }
 
+    public List<PublisherDto> getPublishers() {
+        return publishers;
+    }
+
+    public void setPublishers(List<PublisherDto> publishers) {
+        this.publishers = publishers;
+    }
+
     public Set<ProfileDto> getProfiles() {
         return profiles;
     }
 
     public void setProfiles(Set<ProfileDto> profiles) {
         this.profiles = profiles;
-    }
-
-    public Set<TitleDto> getTitles() {
-        return titles;
-    }
-
-    public void setTitles(Set<TitleDto> titles) {
-        this.titles = titles;
     }
 
     public Set<UserSocialNetworkDto> getUserSocialNetworks() {
