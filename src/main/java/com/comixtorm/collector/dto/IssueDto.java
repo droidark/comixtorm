@@ -21,7 +21,7 @@ public class IssueDto implements Comparator<IssueDto> {
     private boolean collected;
     private TitleDto title;
     private List<CoverDto> covers;
-    private Set<AuthorDto> authors;
+    private List<AuthorDto> authors;
 
     public Long getId() {
         return id;
@@ -143,11 +143,11 @@ public class IssueDto implements Comparator<IssueDto> {
         this.covers = covers;
     }
 
-    public Set<AuthorDto> getAuthors() {
+    public List<AuthorDto> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(Set<AuthorDto> authors) {
+    public void setAuthors(List<AuthorDto> authors) {
         this.authors = authors;
     }
 

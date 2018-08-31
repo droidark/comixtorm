@@ -19,8 +19,8 @@ public class UserDto implements Comparable<UserDto> {
     private String ipAddress;
     private String status;
     private List<PublisherDto> publishers;
-    private Set<ProfileDto> profiles;
-    private Set<UserSocialNetworkDto> userSocialNetworks;
+    private List<ProfileDto> profiles;
+    private List<UserSocialNetworkDto> userSocialNetworks;
 
     public Long getId() {
         return id;
@@ -110,19 +110,19 @@ public class UserDto implements Comparable<UserDto> {
         this.publishers = publishers;
     }
 
-    public Set<ProfileDto> getProfiles() {
+    public List<ProfileDto> getProfiles() {
         return profiles;
     }
 
-    public void setProfiles(Set<ProfileDto> profiles) {
+    public void setProfiles(List<ProfileDto> profiles) {
         this.profiles = profiles;
     }
 
-    public Set<UserSocialNetworkDto> getUserSocialNetworks() {
+    public List<UserSocialNetworkDto> getUserSocialNetworks() {
         return userSocialNetworks;
     }
 
-    public void setUserSocialNetworks(Set<UserSocialNetworkDto> userSocialNetworks) {
+    public void setUserSocialNetworks(List<UserSocialNetworkDto> userSocialNetworks) {
         this.userSocialNetworks = userSocialNetworks;
     }
 

@@ -8,116 +8,93 @@ import java.util.List;
 import java.util.Set;
 
 public interface ConverterService {
-    //  AUTHOR CONVERTERS
-    default AuthorDto toAuthorDto(Author author, boolean rqdIssues) {
-        AuthorDto authorDto = new AuthorDto();
-        authorDto.setId(author.getId());
-        authorDto.setName(author.getName());
-        authorDto.setAvatar(author.getAvatar());
-        authorDto.setBiography(author.getBiography());
-        return authorDto;
-    }
-
-    default Author toAuthor(AuthorDto authorDto, boolean rqdIssues) {
-        Author author = new Author();
-        author.setId(authorDto.getId());
-        author.setName(authorDto.getName());
-        author.setAvatar(authorDto.getAvatar());
-        author.setBiography(author.getBiography());
-        return author;
-    }
-
-    // PUBLISHER CONVERTERS
-    default PublisherDto toPublisherDto(Publisher publisher, boolean createTitleList, boolean rqdPublisher,
-                                        boolean rqdTitles, boolean rqdIssues, boolean rqdCovers) {
-        PublisherDto publisherDto = new PublisherDto();
-        publisherDto.setId(publisher.getId());
-        publisherDto.setName(publisher.getName());
-        publisherDto.setVanity(publisher.getVanity());
-        publisherDto.setUrl(publisher.getUrl());
-        publisherDto.setLogo(publisher.getLogo());
-        publisherDto.setInformation(publisher.getInformation());
-        publisherDto.setTitles(createTitleList ? toTitleDtoList(publisher.getTitles(), rqdPublisher, rqdTitles,
-                rqdIssues, rqdCovers) : null);
-        return publisherDto;
-    }
-
-    default Publisher toPublisher(PublisherDto publisherDto) {
-        Publisher publisher = new Publisher();
-        publisher.setId(publisherDto.getId());
-        publisher.setName(publisherDto.getName());
-        publisher.setVanity(publisherDto.getVanity());
-        publisher.setUrl(publisherDto.getUrl());
-        publisher.setLogo(publisherDto.getLogo());
-        publisher.setInformation(publisherDto.getInformation());
-        return publisher;
-    }
-
-    // TITLE CONVERTERS
-    default TitleDto toTitleDto(Title title, boolean createPublisher, boolean rqdPublisher, boolean rqdTitles,
-                                boolean rqdIssues, boolean rqdCovers) {
-        TitleDto titleDto = new TitleDto();
-        titleDto.setId(title.getId());
-        titleDto.setName(title.getName());
-        titleDto.setVanity(title.getVanity());
-        titleDto.setAvatar(title.getAvatar());
-        titleDto.setTotalIssues(title.getTotalIssues());
-        titleDto.setLaunchDate(title.getLaunchDate());
-        titleDto.setPublisher(createPublisher ? toPublisherDto(title.getPublisher(), false, rqdPublisher,
-                rqdTitles, rqdIssues, rqdCovers) : null);
-        titleDto.setIssues(rqdIssues ? toIssueDtoList(title.getIssues(), rqdCovers) : null);
-        return titleDto;
-    }
-
-    default List<TitleDto> toTitleDtoList(Set<Title> titles, boolean rqdPublisher, boolean rqdTitles, boolean rqdIssues, boolean rqdCovers) {
-        List<TitleDto> titleDtoList = new ArrayList<>();
-        for(Title title : titles) {
-            titleDtoList.add(toTitleDto(title, rqdPublisher, rqdTitles, rqdIssues, rqdCovers));
-        }
-        return titleDtoList;
-    }
-
-    // ISSUE CONVERTERS
-    default IssueDto toIssueDto(Issue issue, boolean rqdCovers) {
-        IssueDto issueDto = new IssueDto();
-        issueDto.setId(issue.getId());
-        issueDto.setName(issue.getName());
-        issueDto.setVanity(issue.getVanity());
-        issueDto.setNumber(issue.getNumber());
-        issueDto.setPrintPrice(issue.getPrintPrice());
-        issueDto.setDigitalPrice(issue.getDigitalPrice());
-        issueDto.setCurrency(issue.getCurrency());
-        issueDto.setPublishedDate(issue.getPublishedDate());
-        issueDto.setShortReview(issue.getShortReview());
-        issueDto.setEvent(issue.getEvent());
-        issueDto.setStoryArch(issue.getStoryArch());
-        issueDto.setIsbn(issue.getIsbn());
-        issueDto.setCovers(rqdCovers ? toCoverDtoList(issue.getCovers()) : null);
-        return issueDto;
-    }
-
-    default List<IssueDto> toIssueDtoList(Set<Issue> issues, boolean rqdCovers) {
-        List<IssueDto> issueDtoList = new ArrayList<>();
-        for(Issue issue : issues) {
-            issueDtoList.add(toIssueDto(issue, rqdCovers));
-        }
-        return issueDtoList;
-    }
-
-    // COVER CONVERTERS
-    default CoverDto toCoverDto(Cover cover) {
-        CoverDto coverDto = new CoverDto();
-        coverDto.setId(cover.getId());
-        coverDto.setCoverImageUrl(cover.getCoverImageUrl());
-        return coverDto;
-    }
-
-    default List<CoverDto> toCoverDtoList(Set<Cover> covers) {
-        List<CoverDto> coverDtoList = new ArrayList<>();
-        for(Cover cover : covers) {
-            coverDtoList.add(toCoverDto(cover));
-        }
-        return coverDtoList;
-    }
+    //  USER CONVERTERS
     UserDto toUserDto(User user);
+    User toUser(UserDto userDto);
+
+    //  PROFILE CONVERTERS
+    ProfileDto toProfileDto(Profile profile);
+    List<ProfileDto> toProfileDtoList(Set<Profile> profiles);
+
+    Profile toProfile(ProfileDto profileDto);
+    Set<Profile> toProfileSet(List<ProfileDto> profileDtoList);
+
+    // USER SOCIAL NETWORK CONVERTERS
+    UserSocialNetworkDto toUserSocialNetworkDto(UserSocialNetwork userSocialNetwork);
+    List<UserSocialNetworkDto> toUserSocialNetworkDtoList(Set<UserSocialNetwork> userSocialNetworks);
+
+    UserSocialNetwork toUserSocialNetwork(UserSocialNetworkDto userSocialNetworkDto);
+    Set<UserSocialNetwork> toUserSocialNetworkSet(List<UserSocialNetworkDto> userSocialNetworkDtoList);
+
+
+    //  AUTHOR CONVERTERS
+    AuthorDto toAuthorDto(Author author, boolean setIssueList, boolean setRoleList, boolean setAuthorSNList);
+    List<AuthorDto> toAuthorDtoList(Set<Author> authors, boolean setIssueList, boolean setRoleList,
+                                    boolean setAuthorSNList);
+
+    Author toAuthor(AuthorDto authorDto, boolean setIssueSet, boolean setRolesSet, boolean setAuthorSNSet);
+    Set<Author> toAuthorSet(List<AuthorDto> authorDtoList, boolean setIssueSet, boolean setRolesSet,
+                            boolean setAuthorSNSet);
+
+    //  AUTHOR SOCIAL NETWORK CONVERTERS
+    AuthorSocialNetworkDto toAuthorSocialNetworkDto(AuthorSocialNetwork authorSocialNetwork, boolean setAuthor,
+                                                    boolean setRoleList);
+    List<AuthorSocialNetworkDto> toAuthorSocialNetworkDtoList(Set<AuthorSocialNetwork> authorSocialNetworks,
+                                                              boolean setAuthor, boolean setRoleList);
+
+    AuthorSocialNetwork toAuthorSocialNetwork(AuthorSocialNetworkDto authorSocialNetworkDto,
+                                              boolean setAuthorDto);
+    Set<AuthorSocialNetwork> toAuthorSocialNetworkSet(List<AuthorSocialNetworkDto> authorSocialNetworkDtoList,
+                                                      boolean setAuthorDto);
+    //  ROLE CONVERTERS
+    RoleDto toRoleDto(Role role, boolean setAuthorList, boolean setAuthorSNList);
+    List<RoleDto> toRoleDtoList(Set<Role> roles, boolean setAuthorList, boolean setAuthorSNList);
+
+    Role toRole(RoleDto roleDto, boolean setAuthorSet, boolean setAuthorSNSet);
+    Set<Role> toRoleSet(List<RoleDto> roleDtoList, boolean setAuthorSet, boolean setAuthorSNSet);
+
+    //  PUBLISHER CONVERTERS
+    PublisherDto toPublisherDto(Publisher publisher, boolean setTitleList, boolean setPublisherSocialNetworkList,
+                                boolean setIssueList);
+    List<PublisherDto> toPublisherDtoList(Set<Publisher> publishers, boolean setTitleList,
+                                          boolean setPublisherSocialNetworkList, boolean setIssueList);
+
+    Publisher toPublisher(PublisherDto publisherDto, boolean setTitleSet, boolean setPublisherSocialNetworksSet);
+    Set<Publisher> toPublisherSet(List<PublisherDto> publisherDtoList, boolean setTitleSet,
+                                  boolean setPublisherSocialNetworksSet);
+
+    //  PUBLISHER SOCIAL NETWORK CONVERTERS
+    PublisherSocialNetworkDto toPublisherSocialNetworkDto(PublisherSocialNetwork publisherSocialNetwork,
+                                                          boolean setPublisher);
+    List<PublisherSocialNetworkDto> toPublisherSocialNetworkDtoList(
+            Set<PublisherSocialNetwork> publisherSocialNetworks,
+            boolean setPublisher);
+
+    PublisherSocialNetwork toPublisherSocialNetwork(PublisherSocialNetworkDto publisherSocialNetworkDto,
+                                                    boolean setPublisherSet);
+    Set<PublisherSocialNetwork> toPublisherSocialNetworkSet(
+            List<PublisherSocialNetworkDto> publisherSocialNetworkDtoList,
+            boolean setPublisherSet);
+
+    //  TITLE CONVERTERS
+    TitleDto toTitleDto(Title title, boolean setPublisher, boolean setPublisherSocialNetworkList, boolean setIssueList);
+    List<TitleDto> toTitleDtoList(Set<Title> titles, boolean setPublisher, boolean setPublisherSocialNetworkList,
+                                  boolean setIssueList);
+
+    Title toTitle(TitleDto titleDto, boolean setPublisher, boolean setPublisherSocialNetworkList);
+    Set<Title> toTitleSet(List<TitleDto> titleDtoList, boolean setPublisher, boolean setPublisherSocialNetworkList);
+
+    //  ISSUE CONVERTERS
+    IssueDto toIssueDto(Issue issue, boolean setTitle, boolean setCoverList, boolean setAuthorList, boolean setCollected);
+    List<IssueDto> toIssueDtoList(Set<Issue> issues, boolean setTitle, boolean setCoverList, boolean setAuthorList, boolean setCollected);
+
+    Issue toIssue(IssueDto issueDto, boolean setTitle, boolean setAuthorSet);
+    Set<Issue> toIssueSet(List<IssueDto> issueDtoList, boolean setTitle, boolean setAuthorSet);
+
+    //  COVER CONVERTERS
+    CoverDto toCoverDto(Cover cover, boolean setIssueDto, boolean setCollected);
+    List<CoverDto> toCoverList(Set<Cover> covers, boolean setIssueDto, boolean setCollected);
+
+    Cover toCover(CoverDto coverDto, boolean setIssue);
+    Set<Cover> toCoverSet(List<CoverDto> coverDtoList, boolean setIssue);
 }
