@@ -441,7 +441,7 @@ public class ConverterServiceImpl implements ConverterService {
                 ? toPublisherDto(title.getPublisher(), false, setPublisherSocialNetworkList, false)
                 : null);
         titleDto.setIssues(setIssueList
-                ? toIssueDtoList(title.getIssues(), false, true, false, false)
+                ? toIssueDtoList(title.getIssues(), false, true, true, false)
                 : null);
         return titleDto;
     }
