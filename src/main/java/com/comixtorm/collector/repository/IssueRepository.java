@@ -7,7 +7,7 @@ import java.util.Set;
 
 public interface IssueRepository extends CrudRepository<Issue, Long> {
     Issue findByVanity(String vanity);
-    Set<Issue> findByNameContainingIgnoreCase(String name);
+    Set<Issue> findByNameContainingIgnoreCaseOrderById(String name);
     Set<Issue> findByEventContainingIgnoreCase(String event);
     Set<Issue> findByStoryArchContainingIgnoreCase(String storyArch);
     Set<Issue> findByIsbnContaining(Integer isbn);

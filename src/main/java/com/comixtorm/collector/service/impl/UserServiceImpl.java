@@ -1,12 +1,11 @@
 package com.comixtorm.collector.service.impl;
 
+import com.comixtorm.collector.dto.PublisherDto;
 import com.comixtorm.collector.dto.TitleDto;
 import com.comixtorm.collector.dto.UserDto;
 import com.comixtorm.collector.exception.UserAlreadyExistException;
-import com.comixtorm.collector.model.Cover;
-import com.comixtorm.collector.model.Issue;
-import com.comixtorm.collector.model.Title;
-import com.comixtorm.collector.model.User;
+import com.comixtorm.collector.model.*;
+import com.comixtorm.collector.repository.UserPublisherTitleIssueCoverRepository;
 import com.comixtorm.collector.repository.UserRepository;
 import com.comixtorm.collector.service.ConverterService;
 import com.comixtorm.collector.service.UserService;
@@ -24,6 +23,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserPublisherTitleIssueCoverRepository userPublisherTitleIssueCoverRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -47,30 +49,35 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Set<TitleDto> findTitlesByUsername(String username) {
-//        return converterService.convertToSetTitleDto(userRepository.findByUsername(username).getTitles(), false, true, false, false, true);
-        return null;
+    public List<PublisherDto> findPublishersByUsername(String username) {
+        return converterService.toUserDto(userRepository.findByUsername(username)).getPublishers();
     }
 
     @Override
-    public void saveCollection(TitleDto titleDto, String username) {
-//        Title title = new Title();
-//        Issue issue = new Issue();
-//        Cover cover = new Cover();
-//        Set<Issue> issues = new TreeSet<>();
-//        Set<Cover> covers = new TreeSet<>();
-//
-//        cover.setId(3L);
-//        covers.add(cover);
-//
-//        issue.setId(74L);
-//        issue.setUserCovers(covers);
-//        issues.add(issue);
-//
-//        title.setId(13L);
-//        title.setUserIssues(issues);
-//        User u = userRepository.findByUsername(username);
-//        u.getTitles().add(title);
-//        userRepository.save(u);
+    public void saveOrDeleteItemInCollection(PublisherDto publisherDto, String username, boolean add) {
+        User u = userRepository.findByUsername(username);
+
+        Publisher p = new Publisher();
+        p.setId(publisherDto.getId());
+        Title t = new Title();
+        t.setId(publisherDto.getTitles().get(0).getId());
+        Issue i = new Issue();
+        i.setId(publisherDto.getTitles().get(0).getIssues().get(0).getId());
+        Cover c = new Cover();
+        c.setId(publisherDto.getTitles().get(0).getIssues().get(0).getCovers().get(0).getId());
+        UserPublisherTitleIssueCoverPK uk = new UserPublisherTitleIssueCoverPK();
+        UserPublisherTitleIssueCover up = new UserPublisherTitleIssueCover();
+        uk.setUser(u);
+        uk.setPublisher(p);
+        uk.setTitle(t);
+        uk.setIssue(i);
+        uk.setCover(c);
+        up.setUserPublisherTitleIssueCoverPK(uk);
+
+        if(add) {
+            userPublisherTitleIssueCoverRepository.save(up);
+        } else {
+            userPublisherTitleIssueCoverRepository.delete(up);
+        }
     }
 }

@@ -2,8 +2,8 @@ package com.comixtorm.collector.service;
 
 import com.comixtorm.collector.dto.IssueDto;
 
-import java.util.Set;
+import java.util.List;
 
 public interface IssueService {
-    Set<IssueDto>findIssuesByCriterion(String criterion, String value, String username);
+    List<IssueDto> findIssuesByCriterion(String criterion, String value, String username);
 }

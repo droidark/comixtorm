@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -18,7 +19,7 @@ public class IssueController {
 
     @GetMapping("/search/{criterion}/{name}")
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
-    public Set<IssueDto> findIssuesByCriterion(@PathVariable("criterion") String criterion, @PathVariable("name") String value) {
+    public List<IssueDto> findIssuesByCriterion(@PathVariable("criterion") String criterion, @PathVariable("name") String value) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return issueService.findIssuesByCriterion(criterion, value, authentication.getName());
     }

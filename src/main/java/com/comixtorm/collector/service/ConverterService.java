@@ -85,8 +85,8 @@ public interface ConverterService {
     Set<Title> toTitleSet(List<TitleDto> titleDtoList, boolean setPublisher, boolean setPublisherSocialNetworkList);
 
     //  ISSUE CONVERTERS
-    IssueDto toIssueDto(Issue issue, boolean setTitle, boolean setCoverList, boolean setAuthorList, boolean setCollected);
-    List<IssueDto> toIssueDtoList(Set<Issue> issues, boolean setTitle, boolean setCoverList, boolean setAuthorList, boolean setCollected);
+    IssueDto toIssueDto(Issue issue, boolean setPublisher, boolean setTitle, boolean setCoverList, boolean setAuthorList, boolean setCollected);
+    List<IssueDto> toIssueDtoList(Set<Issue> issues, boolean setPublisher, boolean setTitle, boolean setCoverList, boolean setAuthorList, boolean setCollected);
 
     Issue toIssue(IssueDto issueDto, boolean setTitle, boolean setAuthorSet);
     Set<Issue> toIssueSet(List<IssueDto> issueDtoList, boolean setTitle, boolean setAuthorSet);

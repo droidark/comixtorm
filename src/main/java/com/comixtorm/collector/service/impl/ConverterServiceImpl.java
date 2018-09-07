@@ -41,7 +41,7 @@ public class ConverterServiceImpl implements ConverterService {
             }
 
             //  ISSUE
-            issueDto = toIssueDto(userPublisherTitleIssueCover.getUserPublisherTitleIssueCoverPK().getIssue(), true, true, true, true);
+            issueDto = toIssueDto(userPublisherTitleIssueCover.getUserPublisherTitleIssueCoverPK().getIssue(), false, true,true, true, true);
 
             //  COVER
             coverDto = toCoverDto(userPublisherTitleIssueCover.getUserPublisherTitleIssueCoverPK().getCover(), true, true);
@@ -183,7 +183,7 @@ public class ConverterServiceImpl implements ConverterService {
         authorDto.setAvatar(author.getAvatar());
         authorDto.setBiography(author.getBiography());
         authorDto.setIssues(setIssueList
-                ? toIssueDtoList(author.getIssues(), false, false, false, false)
+                ? toIssueDtoList(author.getIssues(), false,false, false, false, false)
                 : null);
         authorDto.setAuthorSocialNetworks(setAuthorSNList
                 ? toAuthorSocialNetworkDtoList(author.getAuthorSocialNetworks(), false, false)
@@ -441,7 +441,7 @@ public class ConverterServiceImpl implements ConverterService {
                 ? toPublisherDto(title.getPublisher(), false, setPublisherSocialNetworkList, false)
                 : null);
         titleDto.setIssues(setIssueList
-                ? toIssueDtoList(title.getIssues(), false, true, true, false)
+                ? toIssueDtoList(title.getIssues(), setPublisher,false, true, true, false)
                 : null);
         return titleDto;
     }
@@ -482,7 +482,7 @@ public class ConverterServiceImpl implements ConverterService {
     }
 
     @Override
-    public IssueDto toIssueDto(Issue issue, boolean setTitle, boolean setCoverList, boolean setAuthorList, boolean setCollected) {
+    public IssueDto toIssueDto(Issue issue, boolean setPublusher, boolean setTitle, boolean setCoverList, boolean setAuthorList, boolean setCollected) {
         IssueDto issueDto = new IssueDto();
         issueDto.setId(issue.getId());
         issueDto.setName(issue.getName());
@@ -498,7 +498,7 @@ public class ConverterServiceImpl implements ConverterService {
         issueDto.setIsbn(issue.getIsbn());
         issueDto.setCollected(setCollected);
         issueDto.setTitle(setTitle
-                ? toTitleDto(issue.getTitle(), false, false, false)
+                ? toTitleDto(issue.getTitle(), setPublusher, false, false)
                 : null);
         issueDto.setCovers(setCoverList
                 ? toCoverList(issue.getCovers(), false, false)
@@ -510,10 +510,10 @@ public class ConverterServiceImpl implements ConverterService {
     }
 
     @Override
-    public List<IssueDto> toIssueDtoList(Set<Issue> issues, boolean setTitle, boolean setCoverList, boolean setAuthorList, boolean setCollected) {
+    public List<IssueDto> toIssueDtoList(Set<Issue> issues, boolean setPublisher, boolean setTitle, boolean setCoverList, boolean setAuthorList, boolean setCollected) {
         List<IssueDto> issueDtoList = new ArrayList<>();
         for(Issue issue : issues) {
-            issueDtoList.add(toIssueDto(issue, setTitle, setCoverList, setAuthorList, setCollected));
+            issueDtoList.add(toIssueDto(issue, setPublisher, setTitle, setCoverList, setAuthorList, setCollected));
         }
         return issueDtoList;
     }
@@ -558,7 +558,7 @@ public class ConverterServiceImpl implements ConverterService {
         coverDto.setCoverImageUrl(cover.getCoverImageUrl());
         coverDto.setCollected(setCollected);
         coverDto.setIssue(setIssueDto
-                ? toIssueDto(cover.getIssue(), false, false, false, false)
+                ? toIssueDto(cover.getIssue(), false, false,false, false, false)
                 : null);
         return coverDto;
     }
