@@ -158,6 +158,7 @@ public class User implements Comparable<User> {
     }
 
     @OneToMany(mappedBy = "userPublisherTitleIssueCoverPK.user", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OrderBy("userPublisherTitleIssueCoverPK.publisher desc")
     public Set<UserPublisherTitleIssueCover> getUserPublisherTitleIssueCovers() {
         return userPublisherTitleIssueCovers;
     }

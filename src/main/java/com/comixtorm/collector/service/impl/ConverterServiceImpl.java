@@ -51,37 +51,40 @@ public class ConverterServiceImpl implements ConverterService {
             if(userDto.getPublishers().contains(titleDto.getPublisher())) {
                 publisherDto = titleDto.getPublisher();
                 titleDto.setPublisher(null);
-                if(!userDto.getPublishers().get(userDto.getPublishers().indexOf(publisherDto)).getTitles().contains(titleDto)) {
-                    userDto.getPublishers().get(userDto.getPublishers().indexOf(publisherDto)).getTitles().add(titleDto);
+                int publisherIndex = userDto.getPublishers().indexOf(publisherDto);
+
+                if(!userDto.getPublishers().get(publisherIndex).getTitles().contains(titleDto)) {
+                    userDto.getPublishers().get(publisherIndex).getTitles().add(titleDto);
                 }
-                int x = (userDto.getPublishers().get(userDto.getPublishers().indexOf(publisherDto)).getTitles().size()) - 1;
-                int y = userDto
+                int titleIndex = (userDto.getPublishers().get(publisherIndex).getTitles().indexOf(titleDto));
+
+                int issueIndex = userDto
                         .getPublishers()
-                        .get(userDto.getPublishers().indexOf(publisherDto))
+                        .get(publisherIndex)
                         .getTitles()
-                        .get(x)
+                        .get(titleIndex)
                         .getIssues()
                         .indexOf(issueDto);
-                int z = userDto.getPublishers().get(userDto.getPublishers().indexOf(publisherDto))
-                        .getTitles().get(x).getIssues().get(y).getCovers().indexOf(coverDto);
+
+                int coverIndex = userDto.getPublishers().get(publisherIndex)
+                        .getTitles().get(titleIndex).getIssues().get(issueIndex).getCovers().indexOf(coverDto);
 
                 userDto
                         .getPublishers()
-                        .get(userDto.getPublishers().indexOf(publisherDto))
+                        .get(publisherIndex)
                         .getTitles()
-                        .get(x)
-                        .getIssues().get(y).setCollected(true);
-                if(z > -1) {
-                    userDto
-                            .getPublishers()
-                            .get(userDto.getPublishers().indexOf(publisherDto))
-                            .getTitles()
-                            .get(x)
-                            .getIssues().get(y).getCovers().get(z).setCollected(true);
-                }
+                        .get(titleIndex)
+                        .getIssues().get(issueIndex).setCollected(true);
+
+                userDto
+                        .getPublishers()
+                        .get(publisherIndex)
+                        .getTitles()
+                        .get(titleIndex)
+                        .getIssues().get(issueIndex).getCovers().get(coverIndex).setCollected(true);
             }
         }
-
+        Collections.sort(userDto.getPublishers());
         return userDto;
     }
 
