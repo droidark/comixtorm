@@ -10,6 +10,6 @@ public interface IssueRepository extends CrudRepository<Issue, Long> {
     Set<Issue> findByNameContainingIgnoreCaseOrderById(String name);
     Set<Issue> findByEventContainingIgnoreCase(String event);
     Set<Issue> findByStoryArchContainingIgnoreCase(String storyArch);
-    Set<Issue> findByIsbnContaining(Integer isbn);
+    Set<Issue> findByIsbnContaining(String isbn);
 
 }

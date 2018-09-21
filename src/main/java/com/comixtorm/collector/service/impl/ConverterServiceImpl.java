@@ -101,8 +101,8 @@ public class ConverterServiceImpl implements ConverterService {
         user.setSignUpDate(userDto.getSignUpDate());
         user.setIpAddress(userDto.getIpAddress());
         user.setStatus(userDto.getStatus());
-        user.setProfiles(toProfileSet(userDto.getProfiles()));
-        user.setUserSocialNetworks(toUserSocialNetworkSet(userDto.getUserSocialNetworks()));
+//        user.setProfiles(toProfileSet(userDto.getProfiles()));
+//        user.setUserSocialNetworks(toUserSocialNetworkSet(userDto.getUserSocialNetworks()));
         return user;
     }
 

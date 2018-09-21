@@ -22,7 +22,7 @@ public class Issue implements Comparable<Issue> {
     private String shortReview;
     private String event;
     private String storyArch;
-    private Integer isbn;
+    private String isbn;
     private Title title;
     private Set<Cover> covers = new TreeSet<>();
 //    private Set<Cover> userCovers = new TreeSet<>();
@@ -131,11 +131,11 @@ public class Issue implements Comparable<Issue> {
     }
 
     @Column(name = "issue_isbn")
-    public Integer getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(Integer isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 

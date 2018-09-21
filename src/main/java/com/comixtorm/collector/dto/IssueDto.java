@@ -17,7 +17,7 @@ public class IssueDto implements Comparator<IssueDto> {
     private String shortReview;
     private String event;
     private String storyArch;
-    private Integer isbn;
+    private String isbn;
     private boolean collected;
     private TitleDto title;
     private List<CoverDto> covers;
@@ -111,11 +111,11 @@ public class IssueDto implements Comparator<IssueDto> {
         this.storyArch = storyArch;
     }
 
-    public Integer getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(Integer isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 

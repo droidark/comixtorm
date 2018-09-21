@@ -1,7 +1,10 @@
 package com.comixtorm.collector.service.impl;
 
 import com.comixtorm.collector.dto.TitleDto;
+import com.comixtorm.collector.model.Publisher;
+import com.comixtorm.collector.model.Title;
 import com.comixtorm.collector.model.User;
+import com.comixtorm.collector.repository.PublisherRepository;
 import com.comixtorm.collector.repository.TitleRepository;
 import com.comixtorm.collector.repository.UserRepository;
 import com.comixtorm.collector.service.ConverterService;
@@ -20,6 +23,9 @@ public class TitleServiceImpl implements TitleService {
     private ConverterService converterService;
 
     @Autowired
+    private PublisherRepository publisherRepository;
+
+    @Autowired
     private TitleRepository titleRepository;
 
     @Autowired
@@ -36,5 +42,12 @@ public class TitleServiceImpl implements TitleService {
 //        Set<User> users = Stream.of(userRepository.findByUsername(username)).collect(Collectors.toSet());
 //        return converterService.convertToTitleDto(titleRepository.findByVanityAndUsersIn(vanity, users),false, true, false, false, false);
         return null;
+    }
+
+    @Override
+    public TitleDto findByVanityAndPublisher(String titleVanity, String publisherVanity) {
+        return converterService.toTitleDto(
+                titleRepository.findByVanityAndPublisher(titleVanity, publisherRepository.findByVanity(publisherVanity)),
+                true, false, true);
     }
 }
