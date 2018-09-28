@@ -6,7 +6,7 @@ import java.util.TreeSet;
 
 @Entity
 @Table(name = "cxt_profile")
-public class Profile {
+public class Profile implements Comparable<Profile> {
     private Long id;
     private String description;
     private Set<User> users = new TreeSet<>();
@@ -38,5 +38,10 @@ public class Profile {
 
     public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    @Override
+    public int compareTo(Profile o) {
+        return (int) (id - o.getId());
     }
 }

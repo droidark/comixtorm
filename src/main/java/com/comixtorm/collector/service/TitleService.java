@@ -11,5 +11,5 @@ import java.util.Set;
 public interface TitleService {
     TitleDto findByVanityOrderByIdAsc(String vanity);
     TitleDto findByVanityAndUsersIn(String vanity, String username);
-    TitleDto findByVanityAndPublisher(String titleVanity, String publisherVanity);
+    TitleDto findByVanityAndPublisher(String username, String titleVanity, String publisherVanity);
 }

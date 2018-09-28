@@ -4,6 +4,7 @@ import com.comixtorm.collector.dto.PublisherDto;
 import com.comixtorm.collector.dto.UserDto;
 import com.comixtorm.collector.exception.UserAlreadyExistException;
 import com.comixtorm.collector.model.*;
+import com.comixtorm.collector.repository.ProfileRepository;
 import com.comixtorm.collector.repository.UserPublisherTitleIssueCoverRepository;
 import com.comixtorm.collector.repository.UserRepository;
 import com.comixtorm.collector.service.ConverterService;
@@ -29,6 +30,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private ProfileRepository profileRepository;
+
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
@@ -38,10 +42,21 @@ public class UserServiceImpl implements UserService {
     public void save(UserDto userDto) throws UserAlreadyExistException {
         User user = userRepository.findByUsername(userDto.getUsername());
         if (user == null) {
-            userDto.setSignUpDate(new Date());
-            userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-            userDto.setStatus("PENDING");
-            userRepository.save(converterService.toUser(userDto));
+            user = userRepository.findByEmail(userDto.getEmail());
+            if(user == null) {
+                userDto.setSignUpDate(new Date());
+                userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+                userDto.setStatus("PENDING");
+                User u = converterService.toUser(userDto);
+                Set<Profile> profiles = new TreeSet();
+                Profile p = profileRepository.findProfileById(2L);
+                profiles.add(p);
+                u.setProfiles(profiles);
+                userRepository.save(u);
+            }
+            else {
+                throw new UserAlreadyExistException("Email already exist!");
+            }
         } else {
             throw new UserAlreadyExistException("User already exist!");
         }

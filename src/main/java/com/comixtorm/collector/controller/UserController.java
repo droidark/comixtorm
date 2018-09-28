@@ -30,7 +30,7 @@ public class UserController {
     @Autowired
     private ConverterService converterService;
 
-    @PostMapping("/sign-up")
+    @PostMapping("/register")
     public void signUp(@RequestBody UserDto userDto) throws Exception {
         userService.save(userDto);
     }

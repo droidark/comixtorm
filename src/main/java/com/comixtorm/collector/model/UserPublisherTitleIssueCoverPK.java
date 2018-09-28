@@ -79,7 +79,6 @@ public class UserPublisherTitleIssueCoverPK implements Serializable {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(user, publisher, title, issue, cover);
     }
 }
