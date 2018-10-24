@@ -8,12 +8,9 @@ import com.comixtorm.collector.repository.UserPublisherTitleIssueCoverRepository
 import com.comixtorm.collector.repository.UserRepository;
 import com.comixtorm.collector.service.ConverterService;
 import com.comixtorm.collector.service.TitleService;
+import com.comixtorm.collector.service.UtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service("titleService")
 public class TitleServiceImpl implements TitleService {
@@ -33,6 +30,9 @@ public class TitleServiceImpl implements TitleService {
     @Autowired
     private UserPublisherTitleIssueCoverRepository userPublisherTitleIssueCoverRepository;
 
+    @Autowired
+    private UtilService utilService;
+
     @Override
     public TitleDto findByVanityOrderByIdAsc(String vanity) {
 //        return converterService.convertToTitleDto(titleRepository.findByVanityOrderByIdAsc(vanity),true, false, false, false, false);
@@ -50,11 +50,7 @@ public class TitleServiceImpl implements TitleService {
     public TitleDto findByVanityAndPublisher(String username, String titleVanity, String publisherVanity) {
         User user = userRepository.findByUsername(username);
         Title title = titleRepository.findByVanityAndPublisher(titleVanity, publisherRepository.findByVanity(publisherVanity));
-        UserPublisherTitleIssueCoverPK userPublisherTitleIssueCoverPK = new UserPublisherTitleIssueCoverPK();
-        userPublisherTitleIssueCoverPK.setUser(user);
-        userPublisherTitleIssueCoverPK.setTitle(title);
-        System.out.println(userPublisherTitleIssueCoverRepository.findAllByUserPublisherTitleIssueCoverPK(userPublisherTitleIssueCoverPK));
-        return null;
+        return utilService.joinCollection(user, title);
 //        return converterService.toTitleDto(
 //                ),
 //                true, false, true);

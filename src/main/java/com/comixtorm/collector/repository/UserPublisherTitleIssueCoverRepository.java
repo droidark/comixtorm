@@ -11,5 +11,5 @@ import java.util.Set;
 public interface UserPublisherTitleIssueCoverRepository extends CrudRepository<UserPublisherTitleIssueCover, UserPublisherTitleIssueCoverPK> {
     Set<UserPublisherTitleIssueCover> findAllByUserPublisherTitleIssueCoverPKIn(
             Set<UserPublisherTitleIssueCoverPK> userPublisherTitleIssueCoverPKSet);
-    Set<UserPublisherTitleIssueCover> findAllByUserPublisherTitleIssueCoverPK(UserPublisherTitleIssueCoverPK userPublisherTitleIssueCoverPK);
+    //Set<UserPublisherTitleIssueCover> findAllByUserPublisherTitleIssueCoverPK(UserPublisherTitleIssueCoverPK userPublisherTitleIssueCoverPK);
 }

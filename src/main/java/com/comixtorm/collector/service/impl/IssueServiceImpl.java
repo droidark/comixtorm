@@ -3,12 +3,10 @@ package com.comixtorm.collector.service.impl;
 import com.comixtorm.collector.converter.Converter;
 import com.comixtorm.collector.dto.IssueDto;
 import com.comixtorm.collector.model.*;
-import com.comixtorm.collector.repository.IssueRepository;
-import com.comixtorm.collector.repository.TitleRepository;
-import com.comixtorm.collector.repository.UserPublisherTitleIssueCoverRepository;
-import com.comixtorm.collector.repository.UserRepository;
+import com.comixtorm.collector.repository.*;
 import com.comixtorm.collector.service.ConverterService;
 import com.comixtorm.collector.service.IssueService;
+import com.comixtorm.collector.service.UtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +19,16 @@ public class IssueServiceImpl implements IssueService {
     private ConverterService converterService;
 
     @Autowired
+    private UtilService utilService;
+
+    @Autowired
     private IssueRepository issueRepository;
+
+    @Autowired
+    private PublisherRepository publisherRepository;
+
+    @Autowired
+    private TitleRepository titleRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -66,4 +73,11 @@ public class IssueServiceImpl implements IssueService {
         return issueDtoList;
     }
 
+    @Override
+    public IssueDto findIssueByVanityAndTitle(String publisherVanity, String titleVanity, String issueVanity, String username) {
+        Issue issue = issueRepository.findByVanityAndTitle(issueVanity,
+                titleRepository.findByVanityAndPublisher(titleVanity, publisherRepository.findByVanity(publisherVanity)));
+        User user = userRepository.findByUsername(username);
+        return utilService.joinCollection(user, issue);
+    }
 }

@@ -23,4 +23,13 @@ public class IssueController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return issueService.findIssuesByCriterion(criterion, value, authentication.getName());
     }
+
+    @GetMapping("search/{publisherVanity}/{titleVanity}/{issueVanity}")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
+    public IssueDto findIssueByVanityAndTitle(@PathVariable("publisherVanity") String publisherVanity,
+                                               @PathVariable("titleVanity") String titleVanity,
+                                               @PathVariable("issueVanity") String issueVanity) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return issueService.findIssueByVanityAndTitle(publisherVanity, titleVanity, issueVanity, authentication.getName());
+    }
 }
